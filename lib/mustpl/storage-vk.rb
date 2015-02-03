@@ -2,8 +2,10 @@ module MuStPl
   class VKStreamStorage < StreamStorage
     attr_accessor :vk_s
 
-    def initialize (vk_app)
-      @vk_s = vk_app
+    AppID = 3310267
+
+    def initialize (vk_session)
+      @vk_s = vk_session
     end
 
     def to_m3u_entry(song)
@@ -24,12 +26,12 @@ module MuStPl
     # needs more testing, just hope it works for now
     def reload_vk_songs(songs)
       vk_ids = songs.list.map { |x| VKStreamStorage.vk_id_s x }
-      vk_songs = @vk_s.audio.get_by_id(audios: vk_ids)
+      vk_songs = @vk_s.get_songs_by_id(vk_ids)
       songs.list.zip(vk_songs) do |s, v| s[:vk_song] = v; end
     end
 
     def vk_get_song(song)
-      @vk_s.audio.get_by_id(audios: VKStreamStorage.vk_id_s(song))\
+      @vk_s.get_songs_by_id(VKStreamStorage.vk_id_s(song))\
         .first
     end
 

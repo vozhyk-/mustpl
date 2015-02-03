@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.email       = 'vitaut.bayaryn@gmail.com'
   s.files       = ["lib/mustpl.rb",
                    "lib/mustpl/main.rb",
+                   "lib/mustpl/vk.rb",
                    "lib/mustpl/storage-vk.rb"]
   s.homepage    =
     'https://github.com/vozhyk-/mustpl'
