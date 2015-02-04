@@ -1,2 +1,4 @@
+LocalStreamStorage.to_m3u_entry
+
 Song.checksum ?
 deduplication (from-vk.link-to from-local)
