@@ -8,14 +8,17 @@ module MuStPl
       @vk_s = vk_session
     end
 
-    def to_m3u_entry(song)
-      # TODO add album? move into method?
-      info = "#{song[:artist]} - #{song[:title]}"
+    def song_url(song)
+      song[:vk_song]["url"]
+    end
 
-      M3U::new_m3u_entry(
-        song[:vk_song]["url"],
-        song[:duration],
-        info)
+    def self.link_to_local_storage!(list, user, storage_name)
+      list.each do |s|
+        storage = user.find_storage(storage_name)
+        s.add_storage storage_name
+        s[storage.local_path_option] =
+          s[:vk_song].vk_dl_filename
+      end
     end
 
     def reload_vk_song(song)

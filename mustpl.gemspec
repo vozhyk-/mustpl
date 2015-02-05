@@ -9,7 +9,9 @@ Gem::Specification.new do |s|
   s.files       = ["lib/mustpl.rb",
                    "lib/mustpl/main.rb",
                    "lib/mustpl/vk.rb",
-                   "lib/mustpl/storage-vk.rb"]
+                   "lib/mustpl/storage-local.rb",
+                   "lib/mustpl/storage-vk.rb",
+                  ]
   s.homepage    =
     'https://github.com/vozhyk-/mustpl'
   s.license     = 'BSD-2'

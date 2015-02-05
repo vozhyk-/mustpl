@@ -11,9 +11,12 @@ $s = MuStPl::VKSession.new(
 
 $u = MuStPl::User.new
 $u.storage["vk"] = MuStPl::VKStreamStorage.new($s)
+$u.storage["vk-local"] = MuStPl::LocalStreamStorage.new(
+  "/home/vozhyk/lab/music/vk", :vk_local_path)
 
 a = $s.get_music; nil
 
 m = a.to_mustpl("vk"); nil
+MuStPl::VKStreamStorage::link_to_local_storage!(m, $u, "vk-local"); nil
 
-m.to_m3u($u, "test.m3u")
+m.to_m3u($u, ["vk-local", "vk"], "test.m3u")

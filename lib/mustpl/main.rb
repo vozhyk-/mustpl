@@ -11,16 +11,6 @@ module MuStPl
   end
 
   class StreamStorage
-    attr_accessor :name
-  end
-
-  class LocalStreamStorage < StreamStorage
-    attr_accessor :storage_dir, :local_path_option
-
-    # def play(song, player)
-    #   full_path = @storage_dir + song[@local_path_option]
-    #   player.add_to_playlist(full_path)
-    # end
   end
 
   class Song
@@ -36,10 +26,21 @@ module MuStPl
     def [](key); @info[key]; end
     def []=(key, value); @info[key] = value; end
 
-    def to_m3u_entry(user)
-      st = self[:storage][0]
+    def add_storage name
+      @info[:storage] << name unless @info[:storage].include? name
+    end
+
+    def to_m3u_entry(user, prio)
+      st = prio.find { |st| self[:storage].include? st }
       storage = user.find_storage(st)
-      storage.to_m3u_entry(self)
+
+      # TODO add album? move into method?
+      info = "#{self[:artist]} - #{self[:title]}"
+
+      M3U::new_m3u_entry(
+        storage.song_url(self),
+        self[:duration],
+        info)
     end
   end
 
@@ -50,21 +51,28 @@ module MuStPl
       @list = list
     end
 
-    def [](i); @list[i]; end
+    def [](i)
+      if i.is_a? Range
+        SongList.new(list[i])
+      else
+        @list[i]
+      end
+    end
     def []=(i, value); @list[i] = value; end
+    def each(&block); @list.each(&block); end
 
     # working version must support:
     #  to_m3u
     #  append/prepend song to list
 
-    def to_m3u_s (user)
+    def to_m3u_s (user, prio)
       M3U::new_m3u_s(
-        @list.map { |s| s.to_m3u_entry(user) })
+        @list.map { |s| s.to_m3u_entry(user, prio) })
     end
 
-    def to_m3u (user, file)
+    def to_m3u (user, prio, file)
       open(file, "w") do |f|
-        f << to_m3u_s(user)
+        f << to_m3u_s(user, prio)
       end
     end
   end

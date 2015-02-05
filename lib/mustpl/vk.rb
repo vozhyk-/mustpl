@@ -31,6 +31,19 @@ module MuStPl
         # TODO genre_id
       )
     end
+
+    def vk_dl_filename_noext
+      artist = self["artist"]; title = self["title"]
+         oid = self["owner_id"]; aid = self["id"]
+      result = "#{artist} - #{title}_#{oid}_#{aid}"
+      # replace '/'  -> '-'
+      #         '\n' -> ' '
+      result.tr("/\n", "- ")
+    end
+
+    def vk_dl_filename
+      self.vk_dl_filename_noext + ".mp3"
+    end
   end
 
   module VKSongList
