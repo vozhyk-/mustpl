@@ -4,6 +4,10 @@ require 'vk-ruby'
 
 require 'pp'
 
+def reload(require_regex)
+  $".grep(/#{require_regex}/).each {|e| $".delete(e) && require(e) }
+end
+
 $s = MuStPl::VKSession.new(
   VK::Application.new(app_id: MuStPl::VKStreamStorage::AppID,
                       access_token: $vk_key,
