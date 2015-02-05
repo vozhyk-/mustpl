@@ -14,10 +14,17 @@ module MuStPl
 
     def self.link_to_local_storage!(list, user, storage_name)
       list.each do |s|
-        storage = user.find_storage(storage_name)
+        VKStreamStorage.link_song_to_local_storage(s, user, storage_name)
+      end
+    end
+
+    def self.link_song_to_local_storage(s, user, storage_name)
+      storage = user.find_storage(storage_name)
+
+      filename = s[:vk_song].vk_dl_filename
+      if storage.path_exist? filename
         s.add_storage storage_name
-        s[storage.local_path_option] =
-          s[:vk_song].vk_dl_filename
+        s[storage.local_path_option] = filename
       end
     end
 
