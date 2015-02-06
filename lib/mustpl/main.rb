@@ -23,7 +23,7 @@ module MuStPl
   end
 
   class Song
-    attr_accessor :info, :storage
+    attr_accessor :info
 
     # TODO
     #  convert_storage
@@ -32,6 +32,7 @@ module MuStPl
       @info = info.last
     end
 
+    def ==(other); @info == other.info; end
     def [](key); @info[key]; end
     def []=(key, value); @info[key] = value; end
 
@@ -60,6 +61,7 @@ module MuStPl
       @list = list
     end
 
+    def ==(other); @list == other.list; end
     def [](i)
       if i.is_a? Range
         SongList.new(list[i])
