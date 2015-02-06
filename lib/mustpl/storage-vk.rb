@@ -1,5 +1,5 @@
 module MuStPl
-  class VKStreamStorage < StreamStorage
+  class VKStorage < Storage
     attr_accessor :vk_s
 
     AppID = 3310267
@@ -15,7 +15,7 @@ module MuStPl
 
     def self.link_to_local_storage!(list, user, storage_name)
       list.each do |s|
-        VKStreamStorage.link_song_to_local_storage(s, user, storage_name)
+        VKStorage.link_song_to_local_storage(s, user, storage_name)
       end
     end
 
@@ -57,13 +57,13 @@ module MuStPl
     # You may need to run it before converting to m3u using this class
     # needs more testing, just hope it works for now
     def reload_vk_songs(songs)
-      vk_ids = songs.list.map { |x| VKStreamStorage.vk_id_s x }
+      vk_ids = songs.list.map { |x| VKStorage.vk_id_s x }
       vk_songs = @vk_s.get_songs_by_id(vk_ids)
       songs.list.zip(vk_songs) do |s, v| s[:vk_song] = v; end
     end
 
     def vk_get_song(song)
-      @vk_s.get_songs_by_id(VKStreamStorage.vk_id_s(song))\
+      @vk_s.get_songs_by_id(VKStorage.vk_id_s(song))\
         .first
     end
 

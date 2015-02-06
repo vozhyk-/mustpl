@@ -1,7 +1,7 @@
 require 'pathname'
 
 module MuStPl
-  class LocalStreamStorage < StreamStorage
+  class LocalStorage < Storage
     attr_accessor :storage_dir, :local_path_option
 
     def initialize(name, storage_dir, local_path_option)

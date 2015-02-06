@@ -14,7 +14,7 @@ module MuStPl
     def find_storage(name); @storage[name]; end
   end
 
-  class StreamStorage
+  class Storage
     attr_accessor :name
 
     def initialize(name)
