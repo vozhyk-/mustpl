@@ -15,13 +15,13 @@ $s = MuStPl::VKSession.new(
                       version: '5.28'))
 
 $u = MuStPl::User.new
-$u.add_storage MuStPl::VKStorage.new("vk", $s)
+$u.add_storage MuStPl::VKStorage.new(:vk, $s)
 $u.add_storage MuStPl::LocalStorage.new(
-  "vk-local", "/home/vozhyk/lab/music/vk", :vk_local_path)
+  :vk_local, "/home/vozhyk/lab/music/vk", :vk_local_path)
 
 a = $s.get_music; nil
 
-m = $u.storage["vk"].import_vk_songs(a); nil
-MuStPl::VKStorage::link_to_local_storage!(m, $u, "vk-local"); nil
+m = $u.storage[:vk].import_vk_songs(a); nil
+MuStPl::VKStorage::link_to_local_storage!(m, $u, :vk_local); nil
 
-m.to_m3u($u, ["vk-local", "vk"], "test.m3u")
+m.to_m3u($u, [:vk_local, :vk], "test.m3u")
