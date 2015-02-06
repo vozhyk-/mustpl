@@ -7,10 +7,19 @@ module MuStPl
       @storage = {}
     end
 
+    def add_storage(st)
+      @storage[st.name] = st
+    end
+
     def find_storage(name); @storage[name]; end
   end
 
   class StreamStorage
+    attr_accessor :name
+
+    def initialize(name)
+      @name = name
+    end
   end
 
   class Song
@@ -62,7 +71,6 @@ module MuStPl
     def each(&block); @list.each(&block); end
 
     # working version must support:
-    #  to_m3u
     #  append/prepend song to list
 
     def to_m3u_s (user, prio)

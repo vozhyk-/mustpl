@@ -18,20 +18,6 @@ module MuStPl
   end
 
   module VKSong
-    def to_must_song (storage_name)
-      MuStPl::Song.new(
-        storage:     [storage_name],
-        vk_song:     self,
-
-        artist:      self["artist"].esc_newlines,
-        title:       self["title"].esc_newlines,
-        duration:    self["duration"],
-
-        # TODO download lyrics
-        # TODO genre_id
-      )
-    end
-
     def vk_dl_filename_noext
       artist = self["artist"]; title = self["title"]
          oid = self["owner_id"]; aid = self["id"]
@@ -47,13 +33,6 @@ module MuStPl
   end
 
   module VKSongList
-    def to_mustpl(storage_name)
-      MuStPl::SongList.new(
-        self.map do |a|
-          a.to_must_song(storage_name)
-        end
-      )
-    end
   end
 end
 

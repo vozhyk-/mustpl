@@ -4,7 +4,8 @@ module MuStPl
 
     AppID = 3310267
 
-    def initialize (vk_session)
+    def initialize (name, vk_session)
+      super(name)
       @vk_s = vk_session
     end
 
@@ -26,6 +27,27 @@ module MuStPl
         s.add_storage storage_name
         s[storage.local_path_option] = filename
       end
+    end
+
+    def import_vk_songs(songs)
+      MuStPl::SongList.new(
+        songs.map { |s| import_vk_song(s) }
+      )
+    end
+
+    def import_vk_song(vk_song)
+      s = vk_song
+      MuStPl::Song.new(
+        storage:     [@name],
+        vk_song:     s,
+
+        artist:      s["artist"].esc_newlines,
+        title:       s["title"].esc_newlines,
+        duration:    s["duration"],
+
+        # TODO download lyrics
+        # TODO genre_id
+      )
     end
 
     def reload_vk_song(song)

@@ -4,6 +4,7 @@ require 'vk-ruby'
 
 require 'pp'
 
+# acts like require, but reloads the files
 def reload(require_regex)
   $".grep(/#{require_regex}/).each {|e| $".delete(e) && require(e) }
 end
@@ -14,13 +15,13 @@ $s = MuStPl::VKSession.new(
                       version: '5.28'))
 
 $u = MuStPl::User.new
-$u.storage["vk"] = MuStPl::VKStreamStorage.new($s)
-$u.storage["vk-local"] = MuStPl::LocalStreamStorage.new(
-  "/home/vozhyk/lab/music/vk", :vk_local_path)
+$u.add_storage MuStPl::VKStreamStorage.new("vk", $s)
+$u.add_storage MuStPl::LocalStreamStorage.new(
+  "vk-local", "/home/vozhyk/lab/music/vk", :vk_local_path)
 
 a = $s.get_music; nil
 
-m = a.to_mustpl("vk"); nil
+m = $u.storage["vk"].import_vk_songs(a); nil
 MuStPl::VKStreamStorage::link_to_local_storage!(m, $u, "vk-local"); nil
 
 m.to_m3u($u, ["vk-local", "vk"], "test.m3u")
