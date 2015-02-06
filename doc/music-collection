@@ -1,0 +1,10 @@
+collection/
+|- lists/
+|  |- list1.mustpl
+|  |- list2.mustpl
+|  \- ...
+|
+\- metadata/
+   |- song1.song
+   |- song2.song
+   \- ...
