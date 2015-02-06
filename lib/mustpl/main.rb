@@ -74,6 +74,8 @@ module MuStPl
       end
     end
     def []=(i, value); @list[i] = value; end
+    def length; @list.length; end
+    alias_method :size, :length
     def each(&block); @list.each(&block); end
 
     # working version must support:

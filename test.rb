@@ -22,6 +22,11 @@ $u.add_storage MuStPl::LocalStorage.new(
 a = $s.get_music; nil
 
 m = $u.storage[:vk].import_vk_songs(a); nil
-MuStPl::VKStorage::link_to_local_storage!(m, $u, :vk_local); nil
+MuStPl::VKStorage.link_to_local_storage!(m, $u, :vk_local); nil
 
 m.to_m3u($u, [:vk_local, :vk], "test.m3u")
+
+
+l = $u.storage[:vk].import_vk_songs(
+  $s.find_music("russian circles", count: 300)); nil
+l.to_m3u($u, [:vk_local, :vk], "/home/vozhyk/search-test.m3u")

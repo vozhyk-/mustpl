@@ -12,6 +12,10 @@ module MuStPl
       res["items"]
     end
 
+    def find_music(text, count: 30)
+      @a.audio.search(q: text, count: count)["items"]
+    end
+
     def get_songs_by_id(ids)
       @a.audio.get_by_id(audios: ids)
     end
