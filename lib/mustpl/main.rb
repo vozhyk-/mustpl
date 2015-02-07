@@ -78,6 +78,8 @@ module MuStPl
     alias_method :size, :length
     def each(&block); @list.each(&block); end
 
+    def shuffle; SongList.new(list.shuffle); end
+
     # working version must support:
     #  append/prepend song to list
 

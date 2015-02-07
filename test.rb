@@ -26,6 +26,7 @@ MuStPl::VKStorage.link_to_local_storage!(m, $u, :vk_local); nil
 
 m.to_m3u($u, [:vk_local, :vk], "test.m3u")
 
+m.shuffle[0..400].to_m3u($u, [:vk_local, :vk], "/home/vozhyk/part.m3u")
 
 l = $u.storage[:vk].import_vk_songs(
   $s.find_music("russian circles", count: 300)); nil
