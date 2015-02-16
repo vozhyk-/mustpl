@@ -2,12 +2,19 @@ require 'pathname'
 
 module MuStPl
   class LocalStorage < Storage
+    include Saveable
+
     attr_accessor :storage_dir, :local_path_option
 
     def initialize(name, storage_dir, local_path_option)
       super(name)
       @storage_dir = Pathname.new storage_dir
       @local_path_option = local_path_option
+    end
+
+    def save_s
+      "MuStPl::LocalStorage.new(\
+#{@name.save_s}, #{@storage_dir.save_s}, #{@local_path_option.save_s})"
     end
 
     def song_url(song)

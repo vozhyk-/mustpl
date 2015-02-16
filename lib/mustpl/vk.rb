@@ -1,8 +1,15 @@
+require 'vk-ruby'
 
 module MuStPl
   class VKSession
+    include Saveable
+
     def initialize(app)
       @a = app
+    end
+
+    def save_s
+      "MuStPl::VKSession.new(#{@a.save_s})"
     end
 
     def get_music (uid = nil)
@@ -26,9 +33,7 @@ module MuStPl
       artist = self["artist"]; title = self["title"]
          oid = self["owner_id"]; aid = self["id"]
       result = "#{artist} - #{title}_#{oid}_#{aid}"
-      # replace '/'  -> '-'
-      #         '\n' -> ' '
-      result.tr("/\n", "- ")
+      result.escape_filename
     end
 
     def vk_dl_filename
@@ -48,8 +53,27 @@ class Array
   include MuStPl::VKSongList
 end
 
+class VK::Application
+  include MuStPl::Saveable
+
+  def save_s
+    "VK::Application.new(\
+app_id: #{@config.app_id.save_s}, \
+access_token: #{@config.access_token.save_s}, \
+timeout: #{@config.timeout.save_s}, \
+open_timeout: #{@config.open_timeout.save_s}, \
+)"
+  end
+end
+
 class String
-  def esc_newlines
+  def escape_filename
+    # replace '/'  -> '-'
+    #         '\n' -> ' '
+    self.tr("/\n", "- ")
+  end
+
+  def escape_newlines
     self.tr("\n", " ")
   end
 end

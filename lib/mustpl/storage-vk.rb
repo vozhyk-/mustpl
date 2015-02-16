@@ -1,5 +1,7 @@
 module MuStPl
   class VKStorage < Storage
+    include Saveable
+
     attr_accessor :vk_s
 
     AppID = 3310267
@@ -7,6 +9,10 @@ module MuStPl
     def initialize (name, vk_session)
       super(name)
       @vk_s = vk_session
+    end
+
+    def save_s
+      "MuStPl::VKStorage.new(#{@name.save_s}, #{@vk_s.save_s})"
     end
 
     def song_url(song)
@@ -29,8 +35,9 @@ module MuStPl
       end
     end
 
-    def import_vk_songs(songs)
+    def import_vk_songs(name, songs)
       MuStPl::SongList.new(
+        name,
         songs.map { |s| import_vk_song(s) }
       )
     end
@@ -41,8 +48,8 @@ module MuStPl
         storage:     [@name],
         vk_song:     s,
 
-        artist:      s["artist"].esc_newlines,
-        title:       s["title"].esc_newlines,
+        artist:      s["artist"].escape_newlines,
+        title:       s["title"].escape_newlines,
         duration:    s["duration"],
 
         # TODO download lyrics
