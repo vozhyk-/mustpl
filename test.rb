@@ -34,8 +34,7 @@ m = $c.lists["vk"]; nil
 a = $s.get_music; nil
 
 m = $c.storage[:vk].import_vk_songs("vk", a); nil
-# TODO fix ugly arguments
-MuStPl::VKStorage.link_to_local_storage!(m, $c, :vk_local); nil
+MuStPl::VKStorage.link_to_local_storage!(m, $c.storage[:vk_local]); nil
 
 ### Put the list into collection
 # TODO rename add->put
