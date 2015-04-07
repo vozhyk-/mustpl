@@ -1,0 +1,7 @@
+find_audio_files:      dir -> [files*]
+import_from_file_list: [files*], storage? -> SongList
+    file_to_song: file, storage? -> Song
+        parse_tags: file -> {tags*}
+
+bonus tasks:
+    guess track information from filename

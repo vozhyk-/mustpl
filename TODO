@@ -1,7 +1,15 @@
 make list from local directory
+  find music files recursively
+  extract ID3/other tags from them
+  assemble list
+  sort list
 
 VK: download song (vk->local)
 MEGA: upload song (local->MEGA)
+
+VK: guess and separate album from artist/title
+
+list: search (grep, ...)
 
 share song (executable / ability to do so from player)
 add currently playing song to a list

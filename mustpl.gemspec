@@ -7,9 +7,12 @@ Gem::Specification.new do |s|
   s.authors     = ["Vitaut Bajaryn"]
   s.email       = 'vitaut.bayaryn@gmail.com'
   s.files       = ["lib/mustpl.rb",
-                   "lib/mustpl/main.rb",
-                   "lib/mustpl/vk.rb",
                    "lib/mustpl/save-load.rb",
+                   "lib/mustpl/main.rb",
+                   "lib/mustpl/song.rb",
+                   "lib/mustpl/songlist.rb",
+                   "lib/mustpl/vk.rb",
+                   "lib/mustpl/collection.rb",
                    "lib/mustpl/storage-local.rb",
                    "lib/mustpl/storage-vk.rb",
                   ]
