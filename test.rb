@@ -33,7 +33,7 @@ m = $c.lists["vk"]; nil
 ### Get VK music
 a = $s.get_music; nil
 
-m = $c.storage[:vk].import_vk_songs("vk", a); nil
+m = $c.storage[:vk].import("vk", a); nil
 MuStPl::VKStorage.link_to_local_storage!(m, $c.storage[:vk_local]); nil
 
 ### Put the list into collection
@@ -45,7 +45,10 @@ m.to_m3u($c, [:vk_local, :vk], File.expand_path("~/test.m3u"))
 
 m.shuffle[0..400].to_m3u($c, [:vk_local, :vk], File.expand_path("~/part.m3u"))
 
-l = $c.storage[:vk].import_vk_songs(
+l = $c.storage[:vk].import(
   "search: russian circles",
   $s.find_music("russian circles", count: 300)); nil
 l.to_m3u($c, [:vk_local, :vk], File.expand_path("~/search-test.m3u"))
+
+$c.storage[:vk].reload_vk_songs m; nil
+m.select { |x| x.text_fields_match /russian/i }.to_m3u($c, [:vk_local, :vk], File.expand_path("~/circles.m3u"))

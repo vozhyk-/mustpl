@@ -7,6 +7,9 @@ make list from local directory
 VK: download song (vk->local)
 MEGA: upload song (local->MEGA)
 
+VK: get music from messages (+- "important" ones)
+VK: get more songs when searching (using "offset" parameter)
+
 VK: guess and separate album from artist/title
 
 list: search (grep, ...)

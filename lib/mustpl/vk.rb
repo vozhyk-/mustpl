@@ -81,6 +81,19 @@ open_timeout: #{@config.open_timeout.save_s}, \
   end
 end
 
+class VK::Application
+  include MuStPl::Saveable
+
+  def save_s
+    "VK::Application.new(\
+app_id: #{@config.app_id.save_s}, \
+access_token: #{@config.access_token.save_s}, \
+timeout: #{@config.timeout.save_s}, \
+open_timeout: #{@config.open_timeout.save_s}, \
+)"
+  end
+end
+
 class String
   def escape_filename
     # replace '/'  -> '-'
