@@ -14,7 +14,9 @@ Gem::Specification.new do |s|
                    "lib/mustpl/vk.rb",
                    "lib/mustpl/collection.rb",
                    "lib/mustpl/storage-local.rb",
+                   "lib/mustpl/storage-mega.rb",
                    "lib/mustpl/storage-vk.rb",
+                   "lib/mustpl/storage-with-root.rb",
                   ]
   s.homepage    =
     'https://github.com/vozhyk-/mustpl'

@@ -1,6 +1,7 @@
 ### Initialization
 require 'mustpl'
 require 'vk-ruby'
+require 'rmega'
 
 require 'pp'
 
@@ -52,3 +53,18 @@ l.to_m3u($c, [:vk_local, :vk], File.expand_path("~/search-test.m3u"))
 
 $c.storage[:vk].reload_vk_songs m; nil
 m.select { |x| x.text_fields_match /russian/i }.to_m3u($c, [:vk_local, :vk], File.expand_path("~/circles.m3u"))
+
+
+### Add MEGA Storage
+load 'mega-creds.rb'
+$c.add_storage(MuStPl::MEGAStorage.new(
+                :vk_mega,
+                email: $mega_email,
+                mega_storage: Rmega.login($mega_email, $mega_password),
+                root: "vk-music",
+                path_option: :vk_local_path))
+
+m = $c.lists["vk"]; nil
+MuStPl::VKStorage.link_to_local_storage!(m, $c.storage[:vk_mega]); nil
+m.shuffle[0..100].to_m3u($c, [:vk_mega, :vk],
+                         File.expand_path("~/part.m3u"))

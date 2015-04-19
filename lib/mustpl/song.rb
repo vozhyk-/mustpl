@@ -20,6 +20,8 @@ module MuStPl
 
     def to_m3u_entry(collection, prio)
       st = prio.find { |st| self[:storage].include? st }
+      return "" if !st
+
       storage = collection.find_storage(st)
 
       # TODO add album? move into method?

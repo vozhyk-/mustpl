@@ -1,4 +1,5 @@
 collection/
+|- collection.rb
 |- lists/
 |  |- list1.mustpl
 |  |- list2.mustpl

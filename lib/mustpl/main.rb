@@ -9,6 +9,10 @@ module MuStPl
     def initialize(name)
       @name = name
     end
+
+    # Subclass must provide:
+    #   save_s
+    #   song_url
   end
 
   module M3U

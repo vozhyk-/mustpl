@@ -29,7 +29,7 @@ module MuStPl
       filename = s[:vk_song].vk_dl_filename
       if storage.path_exist? filename
         s.add_storage storage.name
-        s[storage.local_path_option] = filename
+        storage.set_song_path(s, filename)
       end
     end
 
