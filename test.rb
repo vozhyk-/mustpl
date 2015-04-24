@@ -1,3 +1,6 @@
+#### test.rb - mustpl usage examples
+### Don't use as a script; copy necessary lines into irb
+
 ### Initialization
 require 'mustpl'
 require 'vk-ruby'
