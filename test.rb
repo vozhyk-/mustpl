@@ -32,6 +32,7 @@ $c = MuStPl::SongCollection.new(
    MuStPl::LocalStorage.new(
      :vk_local, File.expand_path("~/lab/music/vk"), :vk_local_path)
   ]); nil
+$c.save
 
 ### or
 ### Read an existing collection
@@ -46,6 +47,7 @@ a = $s.get_music; nil
 
 # Convert received music into mustpl list
 m = $c.storage[:vk].import("vk", a); nil
+# Add references to locally-stored copies of VK songs
 MuStPl::VKStorage.link_to_local_storage!(m, $c.storage[:vk_local]); nil
 
 ### Put a list into collection

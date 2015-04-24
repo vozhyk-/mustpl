@@ -1,6 +1,10 @@
+require 'fileutils'
+
 module MuStPl
   module Saveable
     def save(filename = save_filename)
+      FileUtils.mkdir_p(filename.dirname)
+
       File.open(filename, 'w') do |f|
         f.print self.save_s
       end
