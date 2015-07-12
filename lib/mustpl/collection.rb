@@ -3,17 +3,18 @@ module MuStPl
     include Saveable
     extend Loadable
 
-    attr_accessor :root, :storage, :lists
+    attr_accessor :root, :storage, :storage_prio, :lists
 
-    def initialize(root_path, storage = [])
+    def initialize(root_path, storage = [], storage_prio = nil)
       @root = Pathname.new(root_path)
       @storage = Hash[storage.map{ |s| [s.name, s] }]
+      @storage_prio = storage_prio or @storage.map(&:first)
       @lists = {}
       read_lists
     end
 
     def save_s
-      "MuStPl::SongCollection.new(#{@root.save_s}, #{@storage.values.save_s})"
+      "MuStPl::SongCollection.new(#{@root.save_s}, #{@storage.values.save_s}, #{stogare_prio.save_s})"
     end
 
     def lists_a

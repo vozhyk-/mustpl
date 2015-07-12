@@ -39,9 +39,9 @@ module MuStPl
         map { |s| s.to_m3u_entry(user, prio) })
     end
 
-    def to_m3u (user, prio, file)
+    def to_m3u (file, collection: $c, prio: collection.storage_prio)
       open(file, "w") do |f|
-        f << to_m3u_s(user, prio)
+        f << to_m3u_s(collection, prio)
       end
     end
   end

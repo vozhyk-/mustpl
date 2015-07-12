@@ -1,4 +1,3 @@
-#### test.rb - mustpl usage examples
 ### Don't use as a script; copy necessary lines into irb
 
 ### Initialization
@@ -8,14 +7,8 @@ require 'rmega'
 
 require 'pp'
 
-# acts like require, but reloads the files
-#
-# Can't be used now
-# due to some classes inheriting from classes created at runtime
-#
-#def reload(require_regex)
-#    $".grep(/#{require_regex}/).each {|e| $".delete(e) && require(e) }
-#end
+def expand(path); File.expand_path(path); end
+
 
 ### Create a new VK session
 # Read key.rb and put your key there for this to work
@@ -27,16 +20,18 @@ $s = MuStPl::VKSession.new(
 
 ### Create a new collection
 $c = MuStPl::SongCollection.new(
-  File.expand_path("~/MEGA/music"),
-  [MuStPl::VKStorage.new(:vk, $s),
-   MuStPl::LocalStorage.new(
-     :vk_local, File.expand_path("~/lab/music/vk"), :vk_local_path)
-  ]); nil
+  expand("~/MEGA/music"),
+  [
+    MuStPl::VKStorage.new(:vk, $s),
+    MuStPl::LocalStorage.new(
+      :vk_local, expand("~/lab/music/vk"), :vk_local_path)
+  ],
+  [:vk_local, :vk]); nil
 $c.save
 
 ### or
 ### Read an existing collection
-$c = MuStPl::SongCollection.load(File.expand_path "~/MEGA/music"); nil
+$c = MuStPl::SongCollection.load(expand "~/MEGA/music"); nil
 # Get VK session from the collection
 $s = $c.storage[:vk].vk_s
 # Take a list from collection
@@ -56,20 +51,21 @@ $c.add_list m; nil
 
 ### Convert a list to an m3u file
 # args:  collection priorities resulting-file
-m.to_m3u($c, [:vk_local, :vk], File.expand_path("~/test.m3u"))
+m.to_m3u(expand("~/test.m3u"))
 
-m.shuffle[0..400].to_m3u($c, [:vk_local, :vk], File.expand_path("~/part.m3u"))
+m.shuffle[0..400].to_m3u(expand("~/part.m3u"))
 
 l = $c.storage[:vk].import(
   "search: russian circles",
   $s.find_music("russian circles", count: 300)); nil
-l.to_m3u($c, [:vk_local, :vk], File.expand_path("~/search-test.m3u"))
+l.to_m3u(expand("~/search-test.m3u"))
 
 ### Reload URLs (and other info?) of songs-from-vk in a list
 # Otherwise, if the list is created long ago, the URLs won't work
 $c.storage[:vk].reload_vk_songs m; nil
 # Make m3u from filtered list
-m.select { |x| x.text_fields_match /russian/i }.to_m3u($c, [:vk_local, :vk], File.expand_path("~/circles.m3u"))
+m.select { |x| x.text_fields_match /russian circles/i }\
+  .to_m3u(expand("~/circles.m3u"))
 
 
 ### Add MEGA Storage
@@ -88,5 +84,5 @@ m = $c.lists["vk"]; nil
 MuStPl::VKStorage.link_to_local_storage!(m, $c.storage[:vk_mega]); nil
 
 # make m3u from random 100 songs
-m.shuffle[0..100].to_m3u($c, [:vk_mega, :vk],
-                         File.expand_path("~/part.m3u"))
+m.shuffle[0..100].to_m3u(expand("~/part-test.m3u"),
+                         prio: [:vk_mega, :vk])
